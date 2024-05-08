@@ -1,0 +1,8 @@
+com\mycompany\model\ModelRegister.class
+com\mycompany\server\Main$1.class
+com\mycompany\server\Main$2.class
+com\mycompany\connnections\DatabaseConnection.class
+com\mycompany\server\Server.class
+com\mycompany\service\Service$1.class
+com\mycompany\service\Service.class
+com\mycompany\server\Main.class
