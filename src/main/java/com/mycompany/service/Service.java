@@ -33,11 +33,14 @@ public class Service {
         server.addConnectListener((SocketIOClient sioc) -> {
             textArea.append("One client connected! \n");
         });
+        System.out.println(
+            "The line before the eventListener"
+        );
         server.addEventListener("register", ModelRegister.class, new DataListener<ModelRegister>() {
             @Override
-            public void onData(SocketIOClient sioc, ModelRegister t, AckRequest ar) throws Exception {
-                System.out.println("register event invoked!!");
-                textArea.append("User has Register :" + t.getUsername()+ " Pass :" + t.getPassword() + "\n");
+            public void onData(SocketIOClient sioc, ModelRegister registerData, AckRequest ar) throws Exception {
+                System.out.println("Server: register event invoked on json data!!");
+                textArea.append(String.valueOf(registerData));
             }
         });
         server.start();
