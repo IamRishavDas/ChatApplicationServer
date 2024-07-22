@@ -20,7 +20,7 @@ public class DatabaseConnection {
         
         String server = "localhost";
         String port = "3306";
-        String database = "ChatApplication";
+        String database = "chatapplication";
         String username = "root";
         String password = "rootp@$$?0RD";
         
