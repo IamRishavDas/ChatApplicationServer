@@ -7,7 +7,7 @@ CREATE TABLE user(
     userId int primary key auto_increment,
     userName varchar(255),
     password varchar(255)
-);
+)ENGINE = InnoDB;
 
 --@block
 SELECT * FROM user;
@@ -16,5 +16,4 @@ SELECT * FROM user;
 INSERT INTO user (userName, password) values("rishav das", "123");
 
 --@block
-delete from user 
-where userId = 3;
+DROP TABLE user;

@@ -3,12 +3,14 @@ package com.mycompany.model;
 public class ModelMessage {
     private boolean action;
     private String message;
+    private Object data;
 
     public ModelMessage(){}
 
-    public ModelMessage(boolean aciton, String message){
+    public ModelMessage(boolean aciton, String message, Object data){
         this.action = aciton;
         this.message = message;
+        this.data = data;
     }
 
     public boolean isAction() {
@@ -22,5 +24,11 @@ public class ModelMessage {
     }
     public void setMessage(String message) {
         this.message = message;
+    }
+    public Object getData(){
+        return this.data;
+    }
+    public void setData(Object data){
+        this.data = data;
     }
 }

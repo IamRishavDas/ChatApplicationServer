@@ -8,6 +8,10 @@ import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.mycompany.model.ModelMessage;
 import com.mycompany.model.ModelRegister;
+import com.mycompany.model.ModelUserAccount;
+
+import java.util.List;
+
 import javax.swing.JTextArea;
 
 
@@ -16,6 +20,7 @@ public class Service {
     private SocketIOServer server;
     private final int PORT_NUMBER = 6969;
     private JTextArea textArea;
+    private ServiceUser serviceUser;
     
     public static Service getService(JTextArea textArea){
         if(service == null){
@@ -25,6 +30,7 @@ public class Service {
     }
     private Service(JTextArea textArea){
         this.textArea = textArea;
+        serviceUser = new ServiceUser();
     }
     
     public void startServer(){
@@ -40,10 +46,26 @@ public class Service {
         server.addEventListener("register", ModelRegister.class, new DataListener<ModelRegister>() {
             @Override
             public void onData(SocketIOClient sioc, ModelRegister registerData, AckRequest ar) throws Exception {
-                ModelMessage modelMessage = new ServiceUser().register(registerData);
-                ar.sendAckData(modelMessage.isAction(), modelMessage.getMessage());
-                textArea.append("User has registered { userName: " + registerData.getUsername() + " Password: " + registerData.getPassword() + " }\n");
+                ModelMessage modelMessage = serviceUser.register(registerData);
+                ar.sendAckData(modelMessage.isAction(), modelMessage.getMessage(), modelMessage.getData());
+                if(modelMessage.isAction()){
+                    textArea.append("User has registered { userName: " + registerData.getUsername() + " Password: " + registerData.getPassword() + " }\n");
+                    server.getBroadcastOperations().sendEvent("list_user", (ModelUserAccount) modelMessage.getData());
+                }
             }
+        });
+        server.addEventListener("list_user", Integer.class, new DataListener<Integer>() {
+
+            @Override
+            public void onData(SocketIOClient client, Integer userId, AckRequest ackSender) throws Exception {
+                try {
+                    List<ModelUserAccount> list = serviceUser.getUser(userId);
+                    client.sendEvent("list_user", list.toArray());
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+            
         });
         server.start();
         textArea.append("The server has started on Port No: " + PORT_NUMBER + "\n");
