@@ -17,3 +17,7 @@ INSERT INTO user (userName, password) values("rishav das", "123");
 
 --@block
 DROP TABLE user;
+
+--@block
+DELETE FROM user 
+where userName in ("Rishav Das", "lol", "mini", "user3");

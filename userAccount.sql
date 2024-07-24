@@ -21,3 +21,7 @@ ALTER COLUMN imageString SET DEFAULT '';
 
 --@block
 SELECT * FROM user_account;
+
+--@block
+DELETE FROM user_account 
+where userName in ("Rishav Das", "lol", "mini", "user3");
